@@ -80,7 +80,8 @@ var approveNumberCharacter;
 var approveLowercaseLetter;
 var approveUppercaseLetter;
 var approveSpecialCharacter;
-var choices1;
+var choices = [];
+var createdPassword = "";
 
 function generatePassword() {
   var passwordLength = prompt(
@@ -127,15 +128,27 @@ function generatePassword() {
       "Would you like to include Special Charcters?"
     );
   }
+
+  if (approveNumberCharacter) {
+    choices = choices.concat(number);
+  }
+  if (approveLowercaseLetter) {
+    choices = choices.concat(lowercaseLetter);
+  }
+  if (approveUppercaseLetter) {
+    choices = choices.concat(uppercaseLetter);
+  }
+  if (approveSpecialCharacter) {
+    choices = choices.concat(specialCharacter);
+  }
+
+  for (var i = 0; i < passwordLength; i++) {
+    createdPassword =
+      createdPassword + choices[Math.floor(Math.random() * choices.length)];
+  }
+  return createdPassword;
 }
 
-//
-// var generatorAlgoIndex = Math.floor(Math.random() * choices1);
-// choices1 = generatorAlgoIndex[choices1];
-
-var generateBtn = document.querySelector("#generate");
-
-// Write password to the #password input
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
@@ -144,4 +157,4 @@ function writePassword() {
 }
 
 // Add event listener to generate button
-document.querySelector("#generate").addEventListener("click", writePassword);
+generateBtn.addEventListener("click", writePassword);
